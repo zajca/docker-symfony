@@ -1,4 +1,5 @@
 A self-sufficient Docker container to run simple Symfony applications.
+Forked from ubermuda/symfony.
 
 ## Usage
 
@@ -7,7 +8,7 @@ $ docker run -itP \
     -v $PWD:/srv \
     -e DB_NAME=somedbname \
     -e INIT=bin/reload \
-    ubermuda/symfony
+    hellslicer/symfony
 ```
 
 ## Parameters
