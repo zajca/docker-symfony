@@ -18,6 +18,7 @@ RUN sed -e 's/;date\.timezone =/date.timezone = \"Europe\/Paris\"/' -i /etc/php5
 RUN sed -e 's/;daemonize = yes/daemonize = no/' -i /etc/php5/fpm/php-fpm.conf
 RUN sed -e 's/;listen\.owner/listen.owner/' -i /etc/php5/fpm/pool.d/www.conf
 RUN sed -e 's/;listen\.group/listen.group/' -i /etc/php5/fpm/pool.d/www.conf
+RUN sed -e "s/:33:33:/:1000:1000:/" /etc/passwd
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 
 RUN echo 'shell /bin/bash' > ~/.screenrc
