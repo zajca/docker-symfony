@@ -18,7 +18,8 @@ RUN sed -e 's/;date\.timezone =/date.timezone = \"Europe\/Paris\"/' -i /etc/php5
 RUN sed -e 's/;daemonize = yes/daemonize = no/' -i /etc/php5/fpm/php-fpm.conf
 RUN sed -e 's/;listen\.owner/listen.owner/' -i /etc/php5/fpm/pool.d/www.conf
 RUN sed -e 's/;listen\.group/listen.group/' -i /etc/php5/fpm/pool.d/www.conf
-RUN sed -e "s/:33:33:/:1000:1000:/" -i /etc/passwd
+RUN sed -e 's/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/' -i /etc/mysql/my.cnf
+RUN sed -e 's/:33:33:/:1000:1000:/' -i /etc/passwd
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 
 RUN echo 'shell /bin/bash' > ~/.screenrc
@@ -27,7 +28,7 @@ ADD vhost.conf /etc/nginx/sites-available/default
 ADD supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 ADD init.sh /init.sh
 
-EXPOSE 80
+EXPOSE 80 3306
 
 VOLUME ["/srv"]
 WORKDIR /srv
