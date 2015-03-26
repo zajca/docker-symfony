@@ -27,6 +27,7 @@ RUN echo 'shell /bin/bash' > ~/.screenrc
 ADD vhost.conf /etc/nginx/sites-available/default
 ADD supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 ADD mysql.sh /usr/local/bin/mysql.sh
+RUN chmod +x /usr/local/bin/mysql.sh
 ADD init.sh /init.sh
 
 EXPOSE 80 3306
