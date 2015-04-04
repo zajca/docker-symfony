@@ -9,7 +9,7 @@ RUN echo "deb http://packages.dotdeb.org wheezy-php56 all" >> /etc/apt/sources.l
 RUN echo "deb-src http://packages.dotdeb.org wheezy-php56 all" >> /etc/apt/sources.list
 
 RUN apt-get update -y
-RUN apt-get install -y curl nginx php5-fpm php5-mysqlnd php5-cli mysql-server supervisor
+RUN apt-get install -y curl git nginx php5-fpm php5-mysqlnd php5-cli mysql-server supervisor
 
 RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
     && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/${VERSION} \
@@ -24,9 +24,13 @@ RUN sed -e 's/;date\.timezone =/date.timezone = \"Europe\/Paris\"/' -i /etc/php5
 RUN sed -e 's/;daemonize = yes/daemonize = no/' -i /etc/php5/fpm/php-fpm.conf
 RUN sed -e 's/;listen\.owner/listen.owner/' -i /etc/php5/fpm/pool.d/www.conf
 RUN sed -e 's/;listen\.group/listen.group/' -i /etc/php5/fpm/pool.d/www.conf
+RUN echo "memory_limit=1024M" > /etc/php5/cli/conf.d/memory-limit.ini
 RUN sed -e 's/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/' -i /etc/mysql/my.cnf
 RUN sed -e 's/:33:33:/:1000:1000:/' -i /etc/passwd
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
+
+ENV COMPOSER_HOME /root/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN echo 'shell /bin/bash' > ~/.screenrc
 
