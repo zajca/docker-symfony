@@ -27,7 +27,7 @@ RUN sed -e 's/;listen\.group/listen.group/' -i /etc/php5/fpm/pool.d/www.conf
 RUN sed -e 's/pm\.max_children = 5/pm.max_children = 16/' -i /etc/php5/fpm/pool.d/www.conf
 RUN sed -e 's/pm\.start_servers = 2/pm.start_servers = 6/' -i /etc/php5/fpm/pool.d/www.conf
 RUN sed -e 's/pm\.min_spare_servers = 1/pm.min_spare_servers = 3/' -i /etc/php5/fpm/pool.d/www.conf
-RUN sed -e 's/pm\.max_spare_servers = 3/pm.min_spare_servers = 10/' -i /etc/php5/fpm/pool.d/www.conf
+RUN sed -e 's/pm\.max_spare_servers = 3/pm.max_spare_servers = 11/' -i /etc/php5/fpm/pool.d/www.conf
 RUN sed -e 's/;pm\.max_requests = 500/pm.max_requests = 500/' -i /etc/php5/fpm/pool.d/www.conf
 RUN echo "memory_limit=1024M" > /etc/php5/cli/conf.d/memory-limit.ini
 RUN sed -e 's/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/' -i /etc/mysql/my.cnf
