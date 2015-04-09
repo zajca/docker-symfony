@@ -11,6 +11,19 @@ RUN echo "deb-src http://packages.dotdeb.org wheezy-php56 all" >> /etc/apt/sourc
 RUN apt-get update -y
 RUN apt-get install -y curl git nginx php5-fpm php5-mysqlnd php5-cli mysql-server supervisor
 
+# Temporary installation of Xdebug
+RUN apt-get install -y php5-dev php-pear
+RUN pecl install xdebug
+RUN echo zend_extension=/usr/lib/php5/20131226/xdebug.so > /etc/php5/fpm/conf.d/xdebug.ini
+RUN echo xdebug.default_enable = 1 >> /etc/php5/fpm/conf.d/xdebug.ini
+RUN echo xdebug.remote_enable = 1 >> /etc/php5/fpm/conf.d/xdebug.ini
+RUN echo xdebug.remote_port = 9000 >> /etc/php5/fpm/conf.d/xdebug.ini
+RUN echo xdebug.remote_connect_back=1 >> /etc/php5/fpm/conf.d/xdebug.ini
+RUN echo xdebug.remote_handler=dbgp >> /etc/php5/fpm/conf.d/xdebug.ini
+RUN echo xdebug.remote_log="/var/log/xdebug.log" >> /etc/php5/fpm/conf.d/xdebug.ini
+RUN echo xdebug.remote_host=0.0.0.0 >> /etc/php5/fpm/conf.d/xdebug.ini
+RUN cp /etc/php5/fpm/conf.d/xdebug.ini /etc/php5/cli/conf.d/xdebug.ini
+
 RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
     && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/${VERSION} \
     && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
