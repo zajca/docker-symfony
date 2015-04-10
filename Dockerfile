@@ -50,6 +50,8 @@ RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 ENV COMPOSER_HOME /root/composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+RUN wget https://phar.phpunit.de/phpunit.phar && chmod +x phpunit.phar && mv phpunit.phar /usr/local/bin/phpunit
+
 RUN echo 'shell /bin/bash' > ~/.screenrc
 
 ADD vhost.conf /etc/nginx/sites-available/default
