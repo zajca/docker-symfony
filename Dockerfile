@@ -9,8 +9,10 @@ RUN echo "deb http://packages.dotdeb.org wheezy-php56 all" >> /etc/apt/sources.l
 RUN echo "deb-src http://packages.dotdeb.org wheezy-php56 all" >> /etc/apt/sources.list
 
 RUN apt-get update -y
-RUN apt-get install -y curl git nginx php5-fpm php5-mysqlnd php5-cli mysql-server supervisor nodejs npm && \
-    ln -s /usr/bin/nodejs /usr/bin/node && \
+RUN apt-get install -y curl git nginx php5-fpm php5-mysqlnd php5-cli mysql-server supervisor build-essential
+    
+RUN curl -sL https://deb.nodesource.com/setup | bash -
+RUN apt-get install -y nodejs npm && \
     npm install -g gulp jspm napa bower
 
 # Temporary installation of Xdebug
