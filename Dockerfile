@@ -64,7 +64,7 @@ ADD mysql.sh /usr/local/bin/mysql.sh
 RUN chmod +x /usr/local/bin/mysql.sh
 ADD init.sh /init.sh
 
-EXPOSE 80 3306
+EXPOSE 8080 3306
 
 VOLUME ["/srv"]
 WORKDIR /srv
